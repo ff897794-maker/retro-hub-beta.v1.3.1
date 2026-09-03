@@ -1,0 +1,354 @@
+/* ============================================================
+   IMPORT TAILWIND
+   ============================================================ */
+@import "tailwindcss";
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#modal .modal-content {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  width: 420px;
+  max-width: 90%;
+  z-index: 10000;
+}
+
+#gameGrid {
+  position: relative;
+  z-index: 10;
+}
+
+/* ============================================================
+   BACKGROUND + SCANLINES
+   ============================================================ */
+.background {
+  position: fixed;
+  inset: 0;
+  background: url("covers/BCO.7bf8d85f-1474-47e0-825d-592fc690dd6c.png")
+    no-repeat center center fixed;
+  background-size: cover;
+  animation: neonPulse 6s infinite alternate;
+  z-index: -2;
+}
+
+.background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+.scanline-overlay {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 0px,
+    rgba(0, 0, 0, 0.2) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: -1;
+  animation: scanline 1s infinite;
+}
+
+/* ============================================================
+   ANIMATIONS (NEON, FLICKER, SCANLINES)
+   ============================================================ */
+@keyframes neonPulse {
+  from {
+    filter: brightness(0.9);
+  }
+  to {
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes scanline {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes flickerSlow {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  24%,
+  55% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes flickerBroken {
+  0%,
+  10%,
+  30%,
+  60%,
+  80%,
+  100% {
+    opacity: 1;
+  }
+  15%,
+  35%,
+  65%,
+  85% {
+    opacity: 0.4;
+  }
+}
+
+.letter-glow {
+  animation: flickerSlow 15s infinite alternate;
+}
+.letter-flicker {
+  animation: flickerSlow 3s infinite alternate;
+}
+.letter-broken {
+  animation: flickerBroken 5s infinite;
+}
+
+/* ============================================================
+   TITLE NEON
+   ============================================================ */
+.title-neon {
+  font-family: "Press Start 2P", cursive;
+  font-size: 2rem;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 5px #f0f,
+    0 0 10px #f0f,
+    0 0 20px #0ff,
+    0 0 40px #0ff;
+}
+
+/* ============================================================
+   DRAG & DROP EFFECTS
+   ============================================================ */
+.drag-ghost {
+  opacity: 0.4;
+}
+.drag-chosen {
+  transform: scale(1.05);
+  transition: transform 0.15s ease;
+}
+.dragging {
+  opacity: 0.4;
+}
+
+/* ============================================================
+   GAME CARD — VARIABLES D’ASPECT
+   ============================================================ */
+.game-card {
+  --box-width: 180px;
+  --box-height: 240px;
+  --side-depth: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  position: relative;
+  margin-bottom: 24pxsS;
+}
+
+/* ============================================================
+   ASPECTS (FORMATS DE BOÎTES)
+   ============================================================ */
+
+/* Big Box PC */
+.aspect-big-box {
+  --box-width: 180px;
+  --box-height: 240px;
+  --side-depth: 50px;
+}
+
+/* CD-ROM Jewel Case */
+.aspect-2000 {
+  /* --box-width: 142px;
+  --box-height: 125px;
+  --side-depth: 10px; */
+  --box-width: 135px;
+  --box-height: 190px;
+  --side-depth: 14px;
+}
+
+/* DVD / PC / PS2 / Xbox */
+.aspect-modern {
+  --box-width: 135px;
+  --box-height: 190px;
+  --side-depth: 14px;
+}
+.aspect-base {
+  --box-width: 150px;
+  --box-height: 145px;
+  --side-depth: 10px;
+}
+
+/* ============================================================
+   STRUCTURE 3D — WRAPPER
+   ============================================================ */
+.game-box-visual {
+  width: var(--box-width);
+  height: var(--box-height);
+  perspective: 900px;
+  position: relative;
+}
+
+.game-box-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  transform: rotateY(-22deg);
+}
+
+.game-card:hover .game-box-inner {
+  transform: rotateY(0deg);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   FACE AVANT
+   ============================================================ */
+.game-box-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.box-cover {
+  width: var(--box-width);
+  height: var(--box-height);
+  overflow: hidden;
+  border-radius: 2px;
+  border: 2px solid black;
+  background: #1e293b;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.box-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* .game-card:hover .box-cover img {
+  transform: scale(1.05);
+} */
+
+/* ============================================================
+   TRANCHE (SIDE)
+   ============================================================ */
+.game-box-side {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: var(--side-depth);
+  height: 100%;
+  background-color: black;
+  background-size: cover;
+  background-position: left center;
+  transform-origin: left;
+  transform: rotateY(90deg);
+  box-shadow: inset -4px 0 6px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   INFO (TEXTE)
+   ============================================================ */
+.game-info {
+  margin-top: 8px;
+  text-align: center;
+  width: var(--box-width);
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+  pointer-events: none;
+}
+
+.game-card:hover .game-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.game-info .title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+}
+
+.game-info .category {
+  font-size: 0.75rem;
+  color: #3b82f6;
+}
+
+/* ============================================================
+   BOUTONS (PARAMÈTRES)
+   ============================================================ */
+.settings-button {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.settings-button:hover {
+  opacity: 1;
+  background-color: #3e5479;
+}
+
+.card-action {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.game-card:hover .card-action {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.delete-button:hover {
+  background-color: #3e5479;
+}

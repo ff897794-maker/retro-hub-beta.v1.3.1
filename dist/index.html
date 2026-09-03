@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>RetroGame-Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body class="text-slate-200 min-h-screen">
+    <!-- HEADER -->
+    <header
+      class="flex items-center justify-between px-8 py-4 bg-purple-950 border-b-2 border-purple-900"
+    >
+      <!-- <h1
+        class="font-semibold text-2xl text-accent text-white [text-shadow:0_0_5px_#f0f,0_0_10px_#f0f,0_0_20px_#0ff,0_0_40px_#0ff] flicker-slow"
+      >
+        🎮
+        <span class="flicker-letter [text-shadow:0_0_10px_#f0f,0_0_20px_#0ff]"
+          >R</span
+        >etro G<span
+          class="flicker-letter [text-shadow:0_0_10px_#f0f,0_0_20px_#0ff]"
+          >a</span
+        >me Hub
+      </h1> -->
+      <h1 class="title-neon">
+        R<span class="letter-flicker">e</span>tro
+        <span class="letter-glow">G</span>ame
+        <span class="letter-broken">H</span>ub
+      </h1>
+
+      <input
+        id="search"
+        type="text"
+        placeholder="Rechercher un jeu..."
+        class="bg-slate-800 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-accent"
+      />
+      <select
+        id="steamFilter"
+        class="bg-slate-800 px-2 py-1 rounded text-slate-200 ml-4"
+      >
+        <option value="">Tous les jeux</option>
+        <option value="steam">Jeux Steam uniquement</option>
+        <option value="nonsteam">Jeux hors Steam</option>
+      </select>
+
+      <select
+        id="categoryFilter"
+        class="bg-slate-800 px-2 py-1 rounded text-slate-200 ml-4"
+      >
+        <option value="">Toutes catégories</option>
+      </select>
+
+      <select id="category-filter" class="hidden"></select>
+
+      <button id="delete-category-header">🗑️</button>
+
+      <!-- Confirmation modal -->
+      <div
+        id="confirm-modal"
+        class="hidden fixed inset-0 items-center justify-center bg-black/50"
+      >
+        <div class="bg-slate-800 p-4 rounded text-white">
+          <p id="confirm-message">Supprimer cette catégorie ?</p>
+          <div class="flex gap-4 mt-4 justify-center">
+            <button id="confirm-yes" class="bg-rose-600 px-3 py-1 rounded">
+              Oui
+            </button>
+            <button id="confirm-no" class="bg-slate-600 px-3 py-1 rounded">
+              Non
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="background"></div>
+    <div class="scanline-overlay"></div>
+    <main class="p-8">
+      <h2 class="text-xl font-semibold mb-4">
+        Bibliothèque (jeux non classés)
+      </h2>
+
+      <!-- GRID JEUX -->
+      <div
+        id="gameGrid"
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-y-20 mt-2 mb-12"
+      ></div>
+
+      <h2 class="era-title text-xl font-semibold mb-4">Retro 90s</h2>
+      <div
+        id="grid-retro90"
+        class="era-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-y-20 mt-2 mb-12"
+      ></div>
+
+      <h2 class="era-title text-xl font-semibold mb-4">Années 2000</h2>
+      <div
+        id="grid-2000"
+        class="era-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-y-20 mt-2 mb-12"
+      ></div>
+
+      <h2 class="era-title text-xl font-semibold mb-4">Moderne</h2>
+      <div
+        id="grid-modern"
+        class="era-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-y-20 mt-2 mb-12"
+      ></div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="text-center text-xs text-slate-500 py-4">
+      2026 © Studio Kon'xD -- RetroGame-Hub
+    </footer>
+
+    <!-- JS -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script> -->
+    <script type="module" src="./index.js"></script>
+
+    <div
+      id="toast"
+      style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: bold;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 999999;
+      "
+    ></div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+# Dépendances
+node_modules/
+
+# Builds / compilations
+release/
+
+# Sauvegardes
+backup/
+
+# Configs locales
+.vscode/
+dist/covers/
+ddraw.ini
+
+# Logs
+*.log
+
+# Environnements
+.env
+.env.*
