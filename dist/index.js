@@ -2,20 +2,6 @@
 import { UI } from "./UI.js";
 import { Game } from "./Game.js";
 import { GameCard } from "./GameCard.js";
-// import { openEditModal } from "./Modal.js";
-// import {
-//   loadGames,
-//   loadCategories,
-//   saveGames,
-//   syncCategories,
-//   addCategory,
-// } from "./Storage.js";
-// import {
-//   renderGrid,
-//   enableSortable,
-//   reorderWithinEra,
-//   applyFilters,
-// } from "./Render.js";
 
 import Sortable from "../libs/sortable.esm.js";
 
@@ -293,7 +279,6 @@ function renderGrid() {
   applyFilters();
   enableSortable();
 }
-
 
 // SORTABLEJS
 function enableSortable() {
